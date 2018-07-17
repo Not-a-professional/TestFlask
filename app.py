@@ -24,4 +24,4 @@ def test_ajax():
 
 
 if __name__ == '__main__':
-    app.run(host='127.0.0.1', port=8888)
+    app.run()  # 修改监听host和port需要在控制台输入命令：flask run -h 127.0.0.1 -p 8888执行
