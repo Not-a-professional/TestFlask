@@ -23,5 +23,15 @@ def test_ajax():
     return jsonify('成功')
 
 
+@app.route('/health')
+def health():
+    return jsonify({"status": "up"})
+
+
+@app.route("/getUser")
+def get_user():
+    return jsonify({'username': 'python', 'password': 'python'})
+
+
 if __name__ == '__main__':
-    app.run()  # 修改监听host和port需要在控制台输入命令：flask run -h 127.0.0.1 -p 8888执行
+    app.run(host='localhost', port=5000)
