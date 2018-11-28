@@ -3,6 +3,8 @@ from flask import jsonify
 from flask import render_template
 from flask import request
 
+import os
+
 app = Flask(__name__)
 
 
@@ -31,6 +33,13 @@ def health():
 @app.route("/getUser")
 def get_user():
     return jsonify({'username': 'python', 'password': 'python'})
+
+
+@app.route("/crawler")
+def crawler():
+    os.chdir('./SCRAPY/SCRAPY') # 必须切换目录，不然爬虫跑不起来
+    print(os.getcwd())
+    os.system('scrapy runspider CrawlSpider.py -o top-stackoverflow-questions.json')  # 执行命令，让爬虫启动
 
 
 if __name__ == '__main__':
