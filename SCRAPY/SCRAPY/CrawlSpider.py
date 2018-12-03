@@ -3,7 +3,18 @@ import scrapy
 
 class StackOverflowSpider(scrapy.Spider):
     name = 'stackoverflow'
-    start_urls = ['http://stackoverflow.com/questions?sort=votes']
+
+    # 利用-a 命令传入参数
+    def __init__(self, url=None, *args, **kwargs):
+        super(StackOverflowSpider, self).__init__(*args, **kwargs)
+        self.start_urls = ['%s' % url]
+
+    # 利用自定义命令传入参数 未成功
+    # def __init__(self, *args, **kwargs):
+    #     super(StackOverflowSpider, self).__init__(*args, **kwargs)
+    #     self.start_urls = [self.settings['start_urls']]
+
+    # start_urls = ['http://stackoverflow.com/questions?sort=votes']
 
     def parse(self, response):
         for href in response.css('.question-summary h3 a::attr(href)'):

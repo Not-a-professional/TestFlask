@@ -18,6 +18,7 @@ def hello_world():
 def test_template():
     return render_template('index.html')
 
+
 # post、delete、put请求
 # 参数获取方式：request.get_json()
 # get请求
@@ -44,8 +45,12 @@ def crawler():
     # os.chdir('./SCRAPY/SCRAPY') # 必须切换目录，不然爬虫跑不起来
     # print(os.getcwd()) # 获取当前绝对路径
     # 执行命令，让爬虫启动
+
     data = request.args
-    os.system('scrapy runspider ./SCRAPY/SCRAPY/CrawlSpider.py -o ./SCRAPY/SCRAPY/' + data['filename'])
+
+    # -a表示额外参数，必须使用name=value键值对方式传入
+    os.system('scrapy runspider ./SCRAPY/SCRAPY/CrawlSpider.py '
+              '-a url=http://stackoverflow.com/questions?sort=votes -o ./SCRAPY/SCRAPY/' + data['filename'])
     from flask import redirect
     return redirect('read_json?filename=' + data['filename'])
 
