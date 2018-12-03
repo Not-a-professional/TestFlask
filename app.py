@@ -1,5 +1,3 @@
-import json
-
 from flask import Flask
 from flask import jsonify
 from flask import render_template
@@ -8,6 +6,7 @@ from flask import request
 import os
 
 app = Flask(__name__)
+app.config['JSON_AS_ASCII'] = False # 用于显示jsonify后的中文编码
 
 
 @app.route('/')
@@ -40,42 +39,32 @@ def get_user():
     return jsonify({'username': 'python', 'password': 'python'})
 
 
-@app.route("/crawler")
+@app.route("/crawler", methods=['GET'])
 def crawler():
     # os.chdir('./SCRAPY/SCRAPY') # 必须切换目录，不然爬虫跑不起来
-    # print(os.getcwd())
-    os.system('scrapy runspider ./SCRAPY/SCRAPY/CrawlSpider.py -o top-stackoverflow-questions.json')  # 执行命令，让爬虫启动
-    if os.path.exists('./SCRAPY/SCRAPY/top-stackoverflow-questions.json'):
-        try:
-            file = open('t./SCRAPY/SCRAPY/op-stackoverflow-questions.json','r')
-            lines = file.readlines()
-            # sb = ''
-            # for line in lines:
-            #     sb = sb + str(line.rstrip('\n').rstrip().split('\t'))
-            # file.close()
-            return jsonify(lines)
-        except FileNotFoundError:
-            return jsonify({"status": "文件不存在"})
-        except PermissionError:
-            return jsonify({"status": "您的权限不足"})
+    # print(os.getcwd()) # 获取当前绝对路径
+    # 执行命令，让爬虫启动
+    data = request.args
+    os.system('scrapy runspider ./SCRAPY/SCRAPY/CrawlSpider.py -o ./SCRAPY/SCRAPY/' + data['filename'])
+    from flask import redirect
+    return redirect('read_json?filename=' + data['filename'])
 
 
 @app.route('/read_json', methods=['GET'])
 def read_json():
     data = request.args
-    if os.path.exists('./SCRAPY/SCRAPY/' + data['filename']):
-        try:
-            file = open('./SCRAPY/SCRAPY/' + data['filename'],'r')
-            lines = file.readlines()
-            # sb = ''
-            # for line in lines:
-            #     sb = sb + str(line)
-            # file.close()
-            return jsonify(lines)
-        except FileNotFoundError:
-            return jsonify({"status": "文件不存在"})
-        except PermissionError:
-            return jsonify({"status": "您的权限不足"})
+    try:
+        file = open('./SCRAPY/SCRAPY/' + data['filename'],'r')
+        lines = file.readlines()
+        # sb = ''
+        # for line in lines:
+        #     sb = sb + str(line)
+        # file.close()
+        return jsonify(lines)
+    except FileNotFoundError:
+        return jsonify({"status": "文件不存在"})
+    except PermissionError:
+        return jsonify({"status": "您的权限不足"})
 
 
 if __name__ == '__main__':
