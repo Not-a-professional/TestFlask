@@ -25,9 +25,10 @@ def test_ajax():
     return jsonify('成功')
 
 
+# 用于心跳检查
 @main.route('/health')
 def health():
-    return jsonify({"status": "up"})
+    return jsonify({"status": "UP"})
 
 
 @main.route("/getUser")
