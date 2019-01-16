@@ -8,4 +8,9 @@
 
 class ScrapyPipeline(object):
     def process_item(self, item, spider):
-        return item
+        if spider.name == 'stackoverflow':
+            return item
+        elif spider.name == 'baiduNews':
+            return item
+        else:
+            return item
