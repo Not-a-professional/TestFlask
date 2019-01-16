@@ -15,7 +15,6 @@ SPIDER_MODULES = ['SCRAPY.spiders']
 NEWSPIDER_MODULE = 'SCRAPY.spiders'
 COMMANDS_MODULE = 'SCRAPY.mycommands'
 
-
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'SCRAPY (+http://www.yourdomain.com)'
 

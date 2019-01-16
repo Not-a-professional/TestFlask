@@ -25,7 +25,7 @@ def test_ajax():
     return jsonify('成功')
 
 
-# 用于心跳检查
+# 用于心跳检查，UP必须大写
 @main.route('/health')
 def health():
     return jsonify({"status": "UP"})

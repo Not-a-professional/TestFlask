@@ -16,6 +16,7 @@ class StackOverflowSpider(scrapy.Spider):
 
     # start_urls = ['http://stackoverflow.com/questions?sort=votes']
 
+    # 这种方式是将url拼接起来重新发起请求进行页面爬虫
     def parse(self, response):
         for href in response.css('.question-summary h3 a::attr(href)'):
             full_url = response.urljoin(href.extract())

@@ -20,6 +20,16 @@ def crawler():
     return redirect('crawler/read_json?filename=' + data['filename'])
 
 
+@app2.route("/news_baidu", methods=['GET'])
+def news_baidu():
+    data = request.args
+
+    os.system('scrapy runspider ./SCRAPY/SCRAPY/NewsSpider.py '
+              '-a url=https://news.baidu.com -o ./SCRAPY/SCRAPY/' + data['filename'])
+    from flask import redirect
+    return redirect('crawler/read_json?filename=' + data['filename'])
+
+
 @app2.route("/read_json", methods=['GET'])
 def read_json():
     data = request.args
