@@ -5,7 +5,7 @@ class StackOverflowSpider(scrapy.Spider):
     name = 'baiduNews'
     custom_settings = {
         'ITEM_PIPELINES': {'SCRAPY.SCRAPY.pipelines.ScrapyPipeline': 300, }
-    }
+    }  # 为单个爬虫定制配置，此处定制这个爬虫的通道，优先级为300
 
     # 利用-a 命令传入参数
     def __init__(self, url=None, *args, **kwargs):
