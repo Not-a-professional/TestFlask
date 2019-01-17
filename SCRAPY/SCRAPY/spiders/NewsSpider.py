@@ -3,6 +3,9 @@ import scrapy
 
 class StackOverflowSpider(scrapy.Spider):
     name = 'baiduNews'
+    custom_settings = {
+        'ITEM_PIPELINES': {'SCRAPY.SCRAPY.pipelines.ScrapyPipeline': 300, }
+    }
 
     # 利用-a 命令传入参数
     def __init__(self, url=None, *args, **kwargs):
