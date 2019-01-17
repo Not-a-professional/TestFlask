@@ -14,7 +14,7 @@ def crawler():
     data = request.args
 
     # -a表示额外参数，必须使用name=value键值对方式传入
-    os.system('scrapy runspider ./SCRAPY/SCRAPY/CrawlSpider.py '
+    os.system('scrapy runspider ./SCRAPY/SCRAPY/spiders/CrawlSpider.py '
               '-a url=http://stackoverflow.com/questions?sort=votes -o ./SCRAPY/SCRAPY/' + data['filename'])
     from flask import redirect
     return redirect('crawler/read_json?filename=' + data['filename'])
@@ -22,12 +22,8 @@ def crawler():
 
 @app2.route("/news_baidu", methods=['GET'])
 def news_baidu():
-    data = request.args
-
-    os.system('scrapy runspider ./SCRAPY/SCRAPY/NewsSpider.py '
-              '-a url=https://news.baidu.com -o ./SCRAPY/SCRAPY/' + data['filename'])
-    from flask import redirect
-    return redirect('crawler/read_json?filename=' + data['filename'])
+    os.system('scrapy runspider ./SCRAPY/SCRAPY/spiders/NewsSpider.py -a url=https://news.baidu.com')
+    return jsonify({"status": "success"})
 
 
 @app2.route("/read_json", methods=['GET'])
