@@ -22,7 +22,12 @@ def crawler():
 
 @app2.route("/news_baidu", methods=['GET'])
 def news_baidu():
-    os.system('scrapy runspider ./SCRAPY/SCRAPY/spiders/NewsSpider.py -a url=https://news.baidu.com')
+    print(os.getcwd())
+    os.chdir('SCRAPY')
+    print(os.getcwd())
+    os.system('scrapy runspider SCRAPY/spiders/NewsSpider.py -a url=https://news.baidu.com')
+    os.chdir('..')
+    print(os.getcwd())
     return jsonify({"status": "success"})
 
 
