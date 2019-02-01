@@ -5,7 +5,7 @@
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 import pymysql.cursors
-
+import datetime
 
 class ScrapyPipeline(object):
     def __init__(self):
@@ -26,10 +26,12 @@ class ScrapyPipeline(object):
         if spider.name == 'stackoverflow':
             return item
         elif spider.name == 'baiduNews':
-            self.cursor.execute("""Insert into news(title, link) values (%s, %s)""",
+            dtime = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            self.cursor.execute("""Insert into news(title, link, date) values (%s, %s, %s)""",
                                 (
                                     item['title'],
-                                    item['link']
+                                    item['link'],
+                                    dtime
                                 ))
 
             self.connect.commit()
